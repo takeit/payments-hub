@@ -1,0 +1,9 @@
+services:
+    ph.behat.context.payment:
+        class: PaymentContext
+        arguments:
+            - '@__symfony__.sylius.repository.payment_method'
+            - '@__symfony__.sylius.factory.payment_method'
+            - { offline: 'Offline', paypal_express_checkout: 'Paypal Express Checkout'}
+        tags:
+            - { name: fob.context_service }
