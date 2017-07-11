@@ -104,7 +104,7 @@ curl -X PATCH \
             "total": 5000,
             "subscription": {
                 "id": 1,
-                "amount": "5000",
+                "amount": 5000,
                 "currency_code": "PLN",
                 "interval": "month",
                 "name": "Monthly subscription",

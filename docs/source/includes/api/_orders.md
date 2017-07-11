@@ -23,7 +23,7 @@ Based on an order you can perform checkouts (see [Checkouts API](#checkouts)).
             "total": 500,
             "subscription": {
                 "id": 6,
-                "amount": "500",
+                "amount": 500,
                 "currency_code": "PLN",
                 "interval": "month",
                 "name": "Monthly subscription",
@@ -114,7 +114,7 @@ curl -X POST \
             "total": 500,
             "subscription": {
                 "id": 6,
-                "amount": "500",
+                "amount": 500,
                 "currency_code": "PLN",
                 "interval": "month",
                 "name": "Monthly subscription",
@@ -195,7 +195,7 @@ curl -X GET \
             "total": 500,
             "subscription": {
                 "id": 6,
-                "amount": "500",
+                "amount": 500,
                 "currency_code": "PLN",
                 "interval": "month",
                 "name": "Monthly subscription",
@@ -312,7 +312,7 @@ Returns a list of all orders.
                         "total": 500,
                         "subscription": {
                             "id": 6,
-                            "amount": "500",
+                            "amount": 500,
                             "currency_code": "PLN",
                             "interval": "month",
                             "name": "Monthly subscription",
