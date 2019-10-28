@@ -10,3 +10,9 @@ services:
         tags:
             - { name: sylius.gateway_configuration_type, type: 'mbe4', label: 'Mbe4' }
             - { name: form.type }
+
+    ph.form.type.gateway_configuration.stripe_sca_checkout:
+        class: PH\Bundle\PayumBundle\Form\Type\StripeScaCheckoutGatewayConfigurationType
+        tags:
+            - { name: sylius.gateway_configuration_type, type: 'stripe_sca_checkout', label: 'Stripe SCA Checkout' }
+            - { name: form.type }

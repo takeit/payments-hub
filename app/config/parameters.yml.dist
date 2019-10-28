@@ -36,3 +36,4 @@ parameters:
         Yearly: 1 year
 
     allow_origin_cors: '*'
+    allowed_currencies: ['PLN', 'USD', 'EUR']
