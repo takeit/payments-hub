@@ -10,7 +10,7 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        <field name="currencyCode" column="currency_code" length="3" />
+        <field name="currencyCode" column="currency_code" length="3" nullable="true" />
         <field type="integer" name="amount" column="amount" />
         <field type="string" name="interval" column="`interval`" nullable="true" />
         <field type="string" name="type" column="`type`" />
@@ -27,6 +27,7 @@
 
         <field name="itemsTotal" column="items_total" type="integer" />
         <field name="total" column="total" type="integer" />
+        <field name="plan" column="plan" type="string" nullable="true" />
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

@@ -21,6 +21,10 @@ interface SubscriptionInterface extends TimestampableInterface, ResourceInterfac
     const STATE_CANCELLED = 'cancelled';
     const STATE_FULFILLED = 'fulfilled';
 
+    public const MODE_SUBSCRIPTION = 'subscription';
+    public const MODE_DONATION = 'donation';
+    public const MODE_PLAN_BASED = 'plan_based';
+
     /**
      * @return mixed
      */
@@ -42,9 +46,9 @@ interface SubscriptionInterface extends TimestampableInterface, ResourceInterfac
     public function getCurrencyCode(): ?string;
 
     /**
-     * @param string $currencyCode
+     * @param string|null $currencyCode
      */
-    public function setCurrencyCode(string $currencyCode);
+    public function setCurrencyCode(?string $currencyCode);
 
     /**
      * @return string|null
@@ -67,12 +71,12 @@ interface SubscriptionInterface extends TimestampableInterface, ResourceInterfac
     public function setStartDate(?\DateTimeInterface $startDate): void;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getType(): ?string;
 
     /**
-     * @param null|string $type
+     * @param string|null $type
      */
     public function setType(?string $type): void;
 
@@ -148,4 +152,8 @@ interface SubscriptionInterface extends TimestampableInterface, ResourceInterfac
      * @return bool
      */
     public function isEmpty(): bool;
+
+    public function getPlan(): ?string;
+
+    public function setPlan(?string $plan): void;
 }

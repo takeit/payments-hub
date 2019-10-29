@@ -12,3 +12,8 @@ services:
     PH\Bundle\SubscriptionBundle\Serializer\MetadataHandler:
         tags:
             - { name: jms_serializer.subscribing_handler }
+
+    ph.provider.subscription_currencies:
+        class: PH\Bundle\SubscriptionBundle\Provider\CurrenciesProvider
+        arguments:
+            - '%allowed_currencies%'

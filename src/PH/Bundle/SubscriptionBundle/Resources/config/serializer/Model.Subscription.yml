@@ -17,6 +17,10 @@ PH\Component\Subscription\Model\Subscription:
             expose: true
             type: string
             groups: [Default, Detailed]
+        plan:
+            expose: true
+            type: string
+            groups: [Default, Detailed]
         type:
             expose: true
             type: string

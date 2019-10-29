@@ -20,7 +20,7 @@ class Subscription implements SubscriptionInterface
     /**
      * @var int
      */
-    protected $amount;
+    protected $amount = 0;
 
     /**
      * @var string|null
@@ -30,7 +30,7 @@ class Subscription implements SubscriptionInterface
     /**
      * @var string
      */
-    protected $currencyCode;
+    protected $currencyCode = '';
 
     /**
      * @var string|null
@@ -77,6 +77,12 @@ class Subscription implements SubscriptionInterface
      */
     protected $metadata;
 
+    /** @var string|null */
+    protected $plan;
+
+    /** @var string */
+    protected $mode = SubscriptionInterface::MODE_SUBSCRIPTION;
+
     /**
      * Subscription constructor.
      */
@@ -122,9 +128,11 @@ class Subscription implements SubscriptionInterface
     /**
      * {@inheritdoc}
      */
-    public function setCurrencyCode(string $currencyCode)
+    public function setCurrencyCode(?string $currencyCode)
     {
-        $this->currencyCode = $currencyCode;
+        if (null !== $currencyCode) {
+            $this->currencyCode = $currencyCode;
+        }
     }
 
     /**
@@ -396,5 +404,27 @@ class Subscription implements SubscriptionInterface
     public function hasSingleMetadata(MetadataInterface $metadata): bool
     {
         return $this->metadata->contains($metadata);
+    }
+
+    public function getPlan(): ?string
+    {
+        return $this->plan;
+    }
+
+    public function setPlan(?string $plan): void
+    {
+        $this->plan = $plan;
+    }
+
+    public function getMode(): string
+    {
+        return $this->mode;
+    }
+
+    public function setMode(?string $mode): void
+    {
+        if (null !== $mode) {
+            $this->mode = $mode;
+        }
     }
 }

@@ -42,7 +42,7 @@ final class SubscriptionPaymentProcessor implements SubscriptionProcessorInterfa
             return;
         }
 
-        if (0 === $subscription->getTotal()) {
+        if (0 === $subscription->getTotal() && null !== $subscription->getPlan()) {
             foreach ($subscription->getPayments(SubscriptionPaymentStates::STATE_NEW) as $payment) {
                 $subscription->removePayment($payment);
             }

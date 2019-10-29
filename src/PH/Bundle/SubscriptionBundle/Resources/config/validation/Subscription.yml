@@ -3,15 +3,15 @@ PH\Component\Subscription\Model\Subscription:
         type:
             - NotBlank:
                 groups: [ph]
-        amount:
-            - GreaterThanOrEqual:
-                value: 0.01
-                groups: [ph]
-            - NotBlank:
-                groups: [ph]
-            - Type:
-                type: integer
-                groups: [ph]
+#        amount:
+#            - GreaterThanOrEqual:
+#                value: 0.01
+#                groups: [ph]
+#            - NotBlank:
+#                groups: [ph]
+#            - Type:
+#                type: integer
+#                groups: [ph]
         startDate:
             - Date:
                 groups: [ph]

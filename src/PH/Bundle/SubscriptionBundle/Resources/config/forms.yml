@@ -20,3 +20,10 @@ services:
             - '@ph.provider.subscription_intervals'
         tags:
             - { name: form.type }
+
+    ph.form.type.currency_choice:
+        class: PH\Bundle\SubscriptionBundle\Form\Type\CurrencyType
+        arguments:
+            - '@ph.provider.subscription_currencies'
+        tags:
+            - { name: form.type }

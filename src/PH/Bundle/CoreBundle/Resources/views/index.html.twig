@@ -33,9 +33,9 @@
                             {{ form_row(form.interval, {attr: {class: 'form-control'}}) }}
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            {{ form_row(form.startDate, {attr: {class: 'form-control'}}) }}
-                        </div>
+{#                        <div class="col-md-6 mb-3">#}
+{#                            {{ form_row(form.startDate, {attr: {class: 'form-control'}}) }}#}
+{#                        </div>#}
                     </span>
                     <div class="col-md-6 mb-3">
                     <div class="d-block my-3">
@@ -121,7 +121,7 @@
                     "currency_code": currency,
                     "type": subType,
                     "method": method,
-                    "metadata": metadata
+                    //"metadata": metadata
                 };
 
             if ('recurring' == subType) {

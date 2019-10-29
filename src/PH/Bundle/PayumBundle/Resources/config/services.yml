@@ -38,3 +38,9 @@ services:
         class: PH\Bundle\PayumBundle\Factory\BankAccountFormFactory
         arguments:
             - '@form.factory'
+
+    ph.payum.stripe_sca_checkout.factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [Combodo\StripeV3\StripeV3GatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: stripe_sca_checkout }

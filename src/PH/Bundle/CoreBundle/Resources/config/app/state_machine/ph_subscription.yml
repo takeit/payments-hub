@@ -13,7 +13,7 @@ winzou_state_machine:
                 from: [new]
                 to: new
             cancel:
-                from: [new]
+                from: [new, fulfilled]
                 to: cancelled
             fulfill:
                 from: [new]

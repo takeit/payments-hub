@@ -13,3 +13,8 @@ services:
             - "@ph.subscription_token_assigner"
         tags:
             - { name: kernel.event_listener, event: ph.subscription.pre_create, method: assignToken }
+
+    ph.event_listener.populate_subscription:
+        class: PH\Bundle\CoreBundle\EventListener\PopulateSubscriptionBasedOnStripePlanListener
+        tags:
+            - { name: kernel.event_listener, event: ph.subscription.pre_create, method: populate }

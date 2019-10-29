@@ -59,15 +59,23 @@ final class CapturePaymentAction extends GatewayAwareAction
                 $payumPayment->setCurrencyCode($subscription->getCurrencyCode());
                 $payumPayment->setDescription($this->descriptionProvider->getPaymentDescription($payment));
 
-                $startDate = $subscription->getStartDate();
-                if (null === $startDate) {
-                    $startDate = new \DateTime();
+                $metadata = [];
+
+                foreach ($subscription->getMetadata() as $value) {
+                    $metadata[$value->getKey()] = $value->getValue();
                 }
 
                 $details = [
                     'interval' => $subscription->getInterval(),
-                    'startDate' => $startDate->format('Y-m-d'),
+                    'plan' => $subscription->getPlan(),
+                    'metadata' => $metadata,
                 ];
+
+                $startDate = $subscription->getStartDate();
+
+                if (null !== $startDate) {
+                    $details['startDate'] = $startDate->format('Y-m-d');
+                }
 
                 if (isset($paymentMethodConfig['method'])) {
                     $details['method'] = $paymentMethodConfig['method'];

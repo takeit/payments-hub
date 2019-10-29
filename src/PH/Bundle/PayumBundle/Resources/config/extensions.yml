@@ -7,4 +7,26 @@ services:
         arguments:
             - '%payum.template.exception%'
         tags:
-            - { name: "payum.extension", all: true, prepend: true }
+            - { name: 'payum.extension', all: true, prepend: true }
+
+    ph.payum_extension.stripe_checkout_completed:
+        class: PH\Bundle\PayumBundle\Extension\StripeCheckoutCompletedExtension
+        arguments:
+            - '@sm.factory'
+            - '@logger'
+        calls:
+            - { method: setHttpRequestVerifier, arguments: ['@=service("payum").getHttpRequestVerifier()']}
+        tags:
+            - { name: 'payum.extension', all: true, prepend: true}
+        public: true
+
+    ph.payum_extension.stripe_subscription_cancelled:
+        class: PH\Bundle\PayumBundle\Extension\StripeSubscriptionCancelledExtension
+        arguments:
+            - '@sm.factory'
+            - '@logger'
+        calls:
+            - { method: setHttpRequestVerifier, arguments: ['@=service("payum").getHttpRequestVerifier()']}
+        tags:
+            - { name: 'payum.extension', all: true, prepend: true}
+        public: true

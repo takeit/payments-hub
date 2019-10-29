@@ -71,6 +71,20 @@ final class PaymentContext implements Context
     }
 
     /**
+     * @Given the system has a payment method :paymentMethodName with a code :paymentMethodCode and Stripe Checkout gateway
+     */
+    public function theSystemHasPaymentMethodWithCodeAndStripeCheckoutGateway(
+        string $paymentMethodName,
+        string $paymentMethodCode
+    ): void {
+        $this->createPaymentMethod($paymentMethodName, $paymentMethodCode, 'Stripe Checkout', 'stripe desc', 1, [
+            'secretKey' => 'TEST',
+            'publishableKey' => 'TEST',
+            'payum.http_client' => '@sylius.payum.http_client',
+        ], true);
+    }
+
+    /**
      * @Given the system has a payment method :paymentMethodName with a code :paymentMethodCode and Paypal Express Checkout gateway
      */
     public function theSystemHasPaymentMethodWithCodeAndPaypalExpressCheckoutGateway(
@@ -144,7 +158,7 @@ final class PaymentContext implements Context
         array $config = [],
         bool $supportsRecurring = false
     ): PaymentMethodInterface {
-        $gatewayFactory = array_search($gatewayFactory, $this->gatewayFactories);
+        $gatewayFactory = array_search($gatewayFactory, $this->gatewayFactories, true);
 
         /** @var PaymentMethodInterface $paymentMethod */
         $paymentMethod = $this->paymentMethodFactory->createWithGateway($gatewayFactory);
