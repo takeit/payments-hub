@@ -75,9 +75,9 @@ class StripeSubscriptionCancelledExtension implements ExtensionInterface
             throw new \LogicException('The request status could not be retrieved! (see previous exceptions)');
         }
 
-//        if (!$status->isCanceled()) {
-//            return;
-//        }
+        if (!$status->isCanceled()) {
+            return;
+        }
 
         $payment = $status->getFirstModel();
         $this->runPaymentWorkflow($payment);

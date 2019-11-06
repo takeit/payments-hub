@@ -30,86 +30,82 @@ final class AmountRangeValidator extends ConstraintValidator
             return;
         }
 
-        if (SubscriptionInterface::MODE_PLAN_BASED === $value->getMode()) {
-            if ($value->getAmount() > 0) {
-                $this->context->buildViolation('The amount field must not be set in this mode.')
-                    ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
-                    ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
-                    ->atPath('amount')
-                    ->addViolation();
+        if (SubscriptionInterface::TYPE_RECURRING === $value->getType()) {
+            if (SubscriptionInterface::MODE_PLAN_BASED === $value->getMode()) {
+                if ($value->getAmount() > 0) {
+                    $this->context->buildViolation('The amount field must not be set in this mode.')
+                        ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
+                        ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
+                        ->atPath('amount')
+                        ->addViolation();
+                }
 
+                if (null !== $value->getInterval()) {
+                    $this->context->buildViolation('The interval field must not be set in this mode.')
+                        ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
+                        ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
+                        ->atPath('interval')
+                        ->addViolation();
+                }
+
+                if ('' !== $value->getCurrencyCode()) {
+                    $this->context->buildViolation('The currency code field must not be set in this mode.')
+                        ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
+                        ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
+                        ->atPath('currencyCode')
+                        ->addViolation();
+                }
+
+                if (null === $value->getPlan()) {
+                    $this->context->buildViolation('The plan field must be set in this mode.')
+                        ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
+                        ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
+                        ->atPath('plan')
+                        ->addViolation();
+                }
+
+                return;
             }
 
-            if ($value->getInterval() !== null) {
-                $this->context->buildViolation('The interval field must not be set in this mode.')
-                    ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
-                    ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
-                    ->atPath('interval')
-                    ->addViolation();
-
-            }
-
-            if ($value->getCurrencyCode() !== '') {
-                $this->context->buildViolation('The currency code field must not be set in this mode.')
-                    ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
-                    ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
-                    ->atPath('currencyCode')
-                    ->addViolation();
-
-
-            }
-
-            if ($value->getPlan() === null) {
-                $this->context->buildViolation('The plan field must be set in this mode.')
+            if (null !== $value->getPlan() && in_array($value->getMode(), [SubscriptionInterface::MODE_DONATION, SubscriptionInterface::MODE_SUBSCRIPTION], true)) {
+                $this->context->buildViolation('The plan field must not be set in this mode.')
                     ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
                     ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
                     ->atPath('plan')
                     ->addViolation();
 
+                return;
             }
 
-            return;
+            if (null === $value->getInterval() && in_array($value->getMode(), [SubscriptionInterface::MODE_DONATION, SubscriptionInterface::MODE_SUBSCRIPTION], true)) {
+                $this->context->buildViolation('The interval field must be set in this mode.')
+                        ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
+                        ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
+                        ->atPath('interval')
+                        ->addViolation();
 
-        }
+                return;
+            }
 
-        if (null !== $value->getPlan() && in_array($value->getMode(), [SubscriptionInterface::MODE_DONATION, SubscriptionInterface::MODE_SUBSCRIPTION], true)) {
-            $this->context->buildViolation('The plan field must not be set in this mode.')
-                ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
-                ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
-                ->atPath('plan')
-                ->addViolation();
+            if (0 === $value->getAmount() && in_array($value->getMode(), [SubscriptionInterface::MODE_DONATION, SubscriptionInterface::MODE_SUBSCRIPTION], true)) {
+                $this->context->buildViolation('The amount field must be set in this mode.')
+                    ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
+                    ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
+                    ->atPath('amount')
+                    ->addViolation();
 
-            return;
-        }
+                return;
+            }
 
-        if (null === $value->getInterval() && in_array($value->getMode(), [SubscriptionInterface::MODE_DONATION, SubscriptionInterface::MODE_SUBSCRIPTION], true)) {
-            $this->context->buildViolation('The interval field must be set in this mode.')
-                ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
-                ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
-                ->atPath('interval')
-                ->addViolation();
+            if ('' === $value->getCurrencyCode() && in_array($value->getMode(), [SubscriptionInterface::MODE_DONATION, SubscriptionInterface::MODE_SUBSCRIPTION], true)) {
+                $this->context->buildViolation('The currency code field must be set in this mode.')
+                    ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
+                    ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
+                    ->atPath('currencyCode')
+                    ->addViolation();
 
-            return;
-        }
-
-        if (0 === $value->getAmount() && in_array($value->getMode(), [SubscriptionInterface::MODE_DONATION, SubscriptionInterface::MODE_SUBSCRIPTION], true)) {
-            $this->context->buildViolation('The amount field must be set in this mode.')
-                ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
-                ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
-                ->atPath('amount')
-                ->addViolation();
-
-            return;
-        }
-
-        if ('' === $value->getCurrencyCode() && in_array($value->getMode(), [SubscriptionInterface::MODE_DONATION, SubscriptionInterface::MODE_SUBSCRIPTION], true)) {
-            $this->context->buildViolation('The currency code field must be set in this mode.')
-                ->setParameter('{{ value }}', $this->formatValue($value, self::PRETTY_DATE))
-                ->setCode(AmountRange::INVALID_CHARACTERS_ERROR)
-                ->atPath('currencyCode')
-                ->addViolation();
-
-            return;
+                return;
+            }
         }
 
         if (!is_numeric($value->getAmount())) {
@@ -123,11 +119,6 @@ final class AmountRangeValidator extends ConstraintValidator
         }
 
         $gatewayConfig = $value->getMethod()->getGatewayConfig()->getConfig();
-//
-//        if ((!isset($gatewayConfig['minAmount']) && !isset($gatewayConfig['maxAmount']))
-//            || SubscriptionInterface::MODE_PLAN_BASED === $value->getMode()) {
-//            return;
-//        }
 
         if (!isset($gatewayConfig['minAmount']) && !isset($gatewayConfig['maxAmount'])) {
             return;

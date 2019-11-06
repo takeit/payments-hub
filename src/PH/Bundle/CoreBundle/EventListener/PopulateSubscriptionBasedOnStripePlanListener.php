@@ -35,6 +35,17 @@ final class PopulateSubscriptionBasedOnStripePlanListener
 
         $subject->setAmount($plan->amount);
         $subject->setCurrencyCode(strtoupper($plan->currency));
-        $subject->setInterval($plan->interval);
+        $subject->setInterval($this->convertInterval($plan->interval));
+    }
+
+    private function convertInterval(string $interval): string
+    {
+        if ('year' === $interval) {
+            return '1 year';
+        }
+
+        if ('month' === $interval) {
+            return '1 month';
+        }
     }
 }

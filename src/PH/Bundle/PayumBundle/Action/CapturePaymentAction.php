@@ -69,6 +69,7 @@ final class CapturePaymentAction extends GatewayAwareAction
                     'interval' => $subscription->getInterval(),
                     'plan' => $subscription->getPlan(),
                     'metadata' => $metadata,
+                    'order_id' => $subscription->getTokenValue(),
                 ];
 
                 $startDate = $subscription->getStartDate();

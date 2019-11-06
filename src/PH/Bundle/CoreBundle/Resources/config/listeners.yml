@@ -18,3 +18,8 @@ services:
         class: PH\Bundle\CoreBundle\EventListener\PopulateSubscriptionBasedOnStripePlanListener
         tags:
             - { name: kernel.event_listener, event: ph.subscription.pre_create, method: populate }
+
+    ph.event_listener.create_stripe_intent:
+        class: PH\Bundle\CoreBundle\EventListener\CreateStripePaymentIntentListener
+        tags:
+            - { name: kernel.event_listener, event: ph.subscription.pre_create, method: createIntent }

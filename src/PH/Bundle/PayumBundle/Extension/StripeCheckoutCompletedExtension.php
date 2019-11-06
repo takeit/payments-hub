@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PH\Bundle\PayumBundle\Extension;
 
 use Combodo\StripeV3\Action\CheckoutCompletedInformationProvider;
+use Combodo\StripeV3\Action\PaymentIntentSucceededInformationProvider;
 use Combodo\StripeV3\Request\handleCheckoutCompletedEvent;
 use Payum\Core\Extension\Context;
 use Payum\Core\Extension\ExtensionInterface;
@@ -54,7 +55,7 @@ class StripeCheckoutCompletedExtension implements ExtensionInterface
     {
         $action = $context->getAction();
 
-        if (!$action instanceof CheckoutCompletedInformationProvider) {
+        if (!$action instanceof CheckoutCompletedInformationProvider || !$action instanceof PaymentIntentSucceededInformationProvider) {
             return;
         }
         if (null !== $context->getException()) {
